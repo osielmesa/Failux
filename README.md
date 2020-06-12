@@ -21,7 +21,7 @@ Comment your solution.
 https://codesandbox.io/s/angry-cdn-iphrw
 
 #### DONE: 
-Fork of sandbox in: https://codesandbox.io/s/failux-osiel-lima-task-9rt2v
+Sandbox in: https://codesandbox.io/s/failux-osiel-lima-task-9rt2v
 
 ###### FIX 1
 - [x] The parameters in the connect function for Interval component where inverted (not in the right order).

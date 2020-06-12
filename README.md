@@ -20,7 +20,7 @@ Comment your solution.
 
 https://codesandbox.io/s/angry-cdn-iphrw
 
-####DONE: 
+#### DONE: 
 Fork of sandbox in: https://codesandbox.io/s/failux-osiel-lima-task-9rt2v
 
 ###### FIX 1

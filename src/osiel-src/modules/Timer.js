@@ -3,7 +3,7 @@ import {connect} from "../common/failux/implementation/failux";
 import Interval from "./Interval";
 import Styledbox from "../common/components/StyledBox";
 
-class TimerComponent extends React.Component {
+class TimerComponent extends React.PureComponent {
   state = {
     currentTime: 0
   };

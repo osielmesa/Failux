@@ -1,9 +1,12 @@
 //Fix 17: inside osiel-src folder You can find an structured project, more readable, scalable and reusable.
-//If you want to run it, uncomment the following line and comment the rest of this document.
 //New separated structure is provided for failux implementation.
 //I also include in this project prop-types, providing propTypes and defaultProps to the reusable component StyledBox.
+//You can read better the fixes explanation and the code in the public directory https://github.com/osielmesa/Failux.
+
+//If you want to run osiel-src, uncomment the following line and comment the rest of this document.
 //import './osiel-src/index'
 
+//Fix 18: I changed Component for PureComponent in IntervalComponent and TimerComponent. PureComponent contains an implementation of componentShouldUpdate that makes it more optimized.
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -39,8 +42,7 @@ const connect = (mapStateToProps, mapDispatchToProps) => Component => {
 
     //Osiel: Fix 5. I consider better to make this in componentDidMount to make it only once when component is mounted and not every time component is updated.
     componentDidMount() {
-      this.unsubscribe = this.context.store.subscribe(this.handleChange.bind(this)); //Osiel: Fix 6. Saving unsubscribe function to use later in componentWillUnmount
-                                                                                     //Using bind to be sure that it will not lose the context in no-arrow functions.
+      this.unsubscribe = this.context.store.subscribe(this.handleChange.bind(this)); //Osiel: Fix 6. Saving unsubscribe function instance to use later in componentWillUnmount
     }
 
     //Osiel: Fix 7. Unsubscribe before component is unmounted.
@@ -104,8 +106,8 @@ const reducer = (state=initialState, action) => {
 
 // components
 
-class IntervalComponent extends React.Component {
-  //Osiel: Fix 8. Adding handleChangeIntervalPressed to provide validation to the next value, I consider 1 as the minimum interval possible.
+class IntervalComponent extends React.PureComponent {
+  //Osiel: Fix 8. Adding handleChangeIntervalPressed to provide validation to the calculated value, I consider 1 as the minimum interval possible.
   handleChangeIntervalPressed = (value) =>{
     if((this.props.currentInterval + value) < 1 ){
       return;
@@ -138,13 +140,13 @@ const Interval = connect(
   })
 )(IntervalComponent);
 
-class TimerComponent extends React.Component {
+class TimerComponent extends React.PureComponent {
   state = {
     currentTime: 0
   };
 
   //Osiel: Fix 16. Adding componentDidUpdate lifecycle method to detect changes in  this.props.currentInterval while the clock is running
-  //It will be consider that if the currentInterval is changed while the watch is running, the watch must start with currentTime in 0 again.
+  //It will be consider that if the currentInterval is changed while the watch is running, the watch must start with currentTime in 0 again and the new time interval.
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(this.setIntervalInstance && prevProps.currentInterval !== this.props.currentInterval){
       this.handleStop()
@@ -178,7 +180,7 @@ class TimerComponent extends React.Component {
   //Osiel: Fix 11. Making handleStart and arrow function to preserve the this context, another option is call bind function with this context as param.
   handleStart = () => {
     //Osiel: Fix 12. Changing setTimeout to setInterval. setTimeout is executed only one time but setInterval is executed every specified interval.
-    //Osiel: Fix 14. Saving setinterval instance to stop (clear) later when handleStop function is called.
+    //Osiel: Fix 14. Saving setInterval instance to stop (clear) later when handleStop function will be called on stop button press.
     this.setIntervalInstance = setInterval(() =>
         this.setState({
           currentTime: this.state.currentTime + this.props.currentInterval

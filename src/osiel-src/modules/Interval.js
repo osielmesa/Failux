@@ -3,7 +3,7 @@ import {connect} from "../common/failux/implementation/failux";
 import {changeInterval} from "../common/failux/ActionsCreator";
 import Styledbox from "../common/components/StyledBox";
 
-class IntervalComponent extends React.Component {
+class IntervalComponent extends React.PureComponent {
   //Osiel: Fix 8. Adding handleChangeIntervalPressed to provide validation to the next value, I consider 1 as the minimum interval possible.
   handleChangeIntervalPressed = (value) =>{
     if((this.props.currentInterval + value) < 1 ){
